@@ -1,0 +1,24 @@
+public class Solution {
+    	    public boolean isMatch(String s, String p) {
+    	    	int sidx=0,pidx=0,match=0,starIdx=-1;
+    	        while(sidx<s.length()){
+    	        	if(pidx<p.length() &&(p.charAt(pidx)=='?' ||p.charAt(pidx)==s.charAt(sidx))){
+    	        		pidx++;sidx++;
+    	        	}else if(pidx<p.length() && p.charAt(pidx)=='*'){
+    	        		starIdx=pidx;
+    	        		pidx++;
+    	        		match=sidx;
+    	        	}else if(starIdx!=-1){
+    	        		pidx=starIdx+1;
+    	        		match++;
+    	        		sidx=match;
+    	        	}else return false;
+    	        }
+    	        while(pidx<p.length()){
+    	        	if(p.charAt(pidx)=='*') pidx++;
+    	        	else return false;
+    	        }
+    	        return true;
+    	    }
+    	   
+    	}
