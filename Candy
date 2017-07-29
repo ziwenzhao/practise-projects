@@ -1,0 +1,70 @@
+public class Solution {
+    public int candy(int[] ratings) {
+    	if(ratings.length==0){
+    		return 0;
+    	}
+    	int total=0;
+    	int end=0;
+    	int start=0;
+    	int []candies= new int[ratings.length];
+    	int i=1;
+    	for(;i<ratings.length;i++){
+    		if(ratings[i]<ratings[i-1]){
+    			continue;
+    		}else{
+    			if(i-1==start){
+    				if(i==1){
+    					candies[i-1]=1;
+    					total+=1;
+    				}else{
+    					candies[i-1]=candies[i-2]+1;
+    					total+=candies[i-1];
+    				}
+    			}else{
+	    			candies[i-1]=1;
+	    			total+=1;
+	        		for(int j=i-2;j>=start;j--){
+	        			if(j==start){
+	        				if(j==0){
+	        					candies[j]=candies[j+1]+1;
+	        				}else{
+	        					candies[j]=Math.max(candies[j+1], candies[j-1])+1;
+	        				}
+	        			}else{
+	        				candies[j]=candies[j+1]+1;
+	        			}
+	        			total+=candies[j];
+	        		}
+    			}
+    			start=i;
+    		}
+    		
+    	}
+    	
+    	if(i-1==start){
+			if(i==1){
+				candies[i-1]=1;
+				total+=1;
+			}else{
+				candies[i-1]=candies[i-2]+1;
+				total+=candies[i-1];
+			}
+		}else{
+			candies[i-1]=1;
+			total+=1;
+    		for(int j=i-2;j>=start;j--){
+    			if(j==start){
+    				if(j==0){
+    					candies[j]=candies[j+1]+1;
+    				}else{
+    					candies[j]=Math.max(candies[j+1], candies[j-1])+1;
+    				}
+    			}else{
+    				candies[j]=candies[j+1]+1;
+    			}
+    			total+=candies[j];
+    		}
+		}
+    	return total;
+    }
+}
