@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int myAtoi(string str) {
+        int sign=1, total=0,digit; string s; 
+        int i=0;
+        while(i<str.length() && str[i]==' ' ){
+            i++;
+        }
+        if(i<str.length() && (str[i]=='+' || str[i]=='-')){
+            sign=(str[i]=='+')?1:-1;
+            i++;
+        }
+        while(i<str.length()){
+            digit=str[i]-'0';
+            if (digit<0 || digit>9){
+                break;
+            }
+            if(sign==1){
+                if (total>INT_MAX/10 || (total==INT_MAX/10 && digit>INT_MAX%10)){
+                    return INT_MAX;
+                }
+            }
+            if(sign==-1){
+                if (total>INT_MIN/-10 || (total==INT_MIN/-10 && digit>INT_MIN/10*10-INT_MIN)){
+                    return INT_MIN;
+                }
+            }
+            total=total*10+digit;
+            i++;
+        }
+        return total*sign;
+    }
+};
