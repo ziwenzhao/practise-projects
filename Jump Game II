@@ -1,0 +1,21 @@
+public class Solution {
+    public int jump(int[] nums) {
+    	if(nums.length==0) return 0;
+        return backTrack(nums,0,0);
+    }
+
+	private int backTrack(int[] nums, int i,int currStep) {
+		// TODO Auto-generated method stub
+		if(i==nums.length-1) return currStep;
+		if(nums[i]==0) return Integer.MAX_VALUE;
+		int min=currStep+nums.length-1-i;
+		for(int k=1;k<=nums[i];k++){
+			if (i+k<=nums.length-1){
+				min=(backTrack(nums, i+k, currStep+1)>=min)?min:backTrack(nums, i+k, currStep+1);
+			}else break;
+		}
+		return min;
+	}
+
+	
+}
