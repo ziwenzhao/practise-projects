@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        string str[numRows];
+        int i=0, len=s.length();
+        while(i<len){
+            for(int idx=0;idx<numRows && i<len;idx++){
+                str[idx].push_back(s[i++]);
+            }
+            for(int idx=numRows-2;idx>0 && i<len;idx--){
+                str[idx].push_back(s[i++]);
+            }
+        }
+        string ans="";
+        for(int j=0;j<numRows;j++){
+            ans.append(str[j]);
+        }
+        return ans;
+    }
+};
