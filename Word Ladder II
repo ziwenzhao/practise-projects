@@ -1,0 +1,53 @@
+public class Solution {
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> list= new ArrayList<>();
+        List<String> curr=new ArrayList<>();
+        curr.add(beginWord);
+        int []min=new int[1];
+        min[0]=Integer.MAX_VALUE;
+        backTrack(beginWord,endWord,curr,wordList,min,list);
+        return list;
+    }
+
+	private void backTrack(String beginWord, String endWord, List<String> curr, List<String> wordList,int [] min, List<List<String>> list) {
+		// TODO Auto-generated method stub
+		
+		if( curr.get(curr.size()-1).equals(endWord)){
+			if(curr.size()<min[0]){
+				list.clear();
+				list.add(new ArrayList<>(curr));
+				min[0]=curr.size();
+				return;
+			}
+			if(curr.size()==min[0]){
+				list.add(new ArrayList<>(curr));
+				return;
+			}
+			if(curr.size()>min[0]){
+				return;
+			}
+			
+		}
+		
+		
+		String last=curr.get(curr.size()-1);
+		for(int i=0;i<wordList.size();i++){
+			if(curr.contains(wordList.get(i))){
+				continue;
+			}
+			String string=wordList.get(i);
+			int diff=0;
+			for(int k=0;k<last.length();k++){
+				if(last.charAt(k)!=string.charAt(k)){
+					diff++;
+				}
+			}
+			if(diff==1){
+				curr.add(wordList.get(i));
+				backTrack(beginWord, endWord, curr, wordList, min, list);
+				curr.remove(curr.size()-1);
+			}
+		}
+		
+	}
+}
