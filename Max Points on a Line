@@ -1,0 +1,78 @@
+public class Solution {
+    public int maxPoints(Point[] points) {
+    	if(points.length==0) return 0;
+    	if(points.length==1) return 1;
+    	HashMap<Point, Integer> pointsOccurrence=new HashMap<>();
+    	for(Point p:points){
+    		boolean found=false;
+    		for(Point q:pointsOccurrence.keySet()){
+    			if(q.x==p.x &&q.y==p.y){
+    				found=true;
+    				pointsOccurrence.put(q, pointsOccurrence.get(q)+1);
+    				break;
+    			}
+    		}
+    		if(!found){
+    			pointsOccurrence.put(p, 1);
+    		}
+    	}
+    	List<Point> uniquePoint=new ArrayList<>(pointsOccurrence.keySet());
+    	HashMap<List<Float>,List<Point>> map=new HashMap<>();
+        for(int i=0;i<uniquePoint.size();i++){
+        	List<Point> check=new ArrayList<>();
+        	for(List<Float> line:map.keySet()){
+        		if((int)(line.get(0)*uniquePoint.get(i).x+line.get(1)*uniquePoint.get(i).y+line.get(2))==0){
+        			List<Point> temp=new ArrayList<>(map.get(line));
+        			temp.add(uniquePoint.get(i));
+        			map.put(line, temp);
+        			check.addAll(map.get(line));
+        		}
+        	}
+        	for(int j=0;j<i;j++){
+        		if(!check.contains(uniquePoint.get(j))){
+        			if(uniquePoint.get(i).x==uniquePoint.get(j).x){
+        				float a=1;
+        				float b=0;
+        				float c=-uniquePoint.get(i).x;
+        				List<Float> newLine=new ArrayList<>();
+        				newLine.add(a);
+        				newLine.add(b);
+        				newLine.add(c);
+        				List<Point> newPoints=new ArrayList<>();
+        				newPoints.add(uniquePoint.get(i));
+        				newPoints.add(uniquePoint.get(j));
+        				map.put(newLine, newPoints);
+        			}else{
+        				float k=(float)(uniquePoint.get(i).y-uniquePoint.get(j).y)/(float)(uniquePoint.get(i).x-uniquePoint.get(j).x);
+        				float b=uniquePoint.get(i).y-k*uniquePoint.get(i).x;
+        				float A=k;
+        				float B=-1;
+        				float C=b;
+        				List<Float> newLine=new ArrayList<>();
+        				newLine.add(A);
+        				newLine.add(B);
+        				newLine.add(C);
+        				List<Point> newPoints=new ArrayList<>();
+        				newPoints.add(uniquePoint.get(i));
+        				newPoints.add(uniquePoint.get(j));
+        				map.put(newLine, newPoints);
+        			}
+        		}
+        	}
+        }
+        if(map.keySet().size()==0){
+        	return points.length;
+        }
+        int max=0;
+        for(List<Float> line:map.keySet()){
+        	int sum=0;
+        	for(Point p:map.get(line)){
+        		sum+=pointsOccurrence.get(p);
+        	}
+        	if(sum>max){
+        		max=sum;
+        	}
+        }
+        return max;
+    }
+}
