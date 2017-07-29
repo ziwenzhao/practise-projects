@@ -1,0 +1,53 @@
+public class Solution {
+    public int minCut(String s) {
+    	boolean [][]pal=new boolean[s.length()][s.length()];
+    	for(int i=s.length()-1;i>=0;i--){
+    		for(int j=i;j<s.length();j++){
+    			if(i==j){
+    				pal[i][j]=true;
+    				continue;
+    			}
+    			if(i+1==j){
+    				if(s.charAt(i)==s.charAt(j)){
+    					pal[i][j]=true;
+    				}
+    				continue;
+    			}
+    			if(s.charAt(i)==s.charAt(j) && pal[i+1][j-1]){
+    				pal[i][j]=true;
+    			}
+    		}
+    	}
+    	
+        List<List<String>> list=new ArrayList<>();
+        return backTrack(s,new ArrayList<>(),-1,pal);
+       
+    }
+
+	private int backTrack(String s, ArrayList arrayList, int i,boolean [][]pal) {
+		// TODO Auto-generated method stub
+		if(i==s.length()-1){
+			return arrayList.size()-1;
+		}
+		int min=Integer.MAX_VALUE;
+		for(int j=i+1;j<s.length();j++){
+			if(pal[i+1][j]){
+				arrayList.add(s.substring(i+1,j+1));
+				int length=backTrack(s, arrayList, j,pal);
+				if(length<min){
+					min=length;
+				}
+				arrayList.remove(arrayList.size()-1);
+			}
+		}
+		return min;
+	}
+
+	private boolean isPalindrome(String s) {
+		// TODO Auto-generated method stub
+		if(new StringBuilder(s).reverse().toString().equals(s)){
+			return true;
+		}
+		return false;
+	}
+}
