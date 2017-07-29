@@ -1,0 +1,28 @@
+public class Solution {
+    public String longestPalindrome(String s) {
+        String ans=new String();
+        int max=0;
+        for(int i=0;i<s.length();i++){
+            String l1=expandAround(s,i,i);
+            String l2=expandAround(s,i,i+1);
+            ans=(l1.length()>max)?l1:ans;
+            max=(l1.length()>max)?l1.length():max;
+            ans=(l2.length()>max)?l2:ans;
+            max=(l2.length()>max)?l2.length():max;
+            
+        }
+        return ans;
+    }
+    
+    String expandAround(String s,int left,int right){
+        int i=left,j=right;
+        if(i==s.length()-1){
+            return s.substring(i);
+        }
+        while(i>=0 && j<s.length() && s.charAt(i)==s.charAt(j)){
+            i--;
+            j++;
+        }
+        return s.substring(i+1,j);
+    }
+}
