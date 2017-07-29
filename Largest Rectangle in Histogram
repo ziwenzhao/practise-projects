@@ -1,0 +1,21 @@
+public class Solution {
+    public int largestRectangleArea(int[] heights) {
+    	int maxsize=0;
+        for(int i=0;i<heights.length;i++){
+        	if(i!=0 && heights[i]<=heights[i-1]) continue;
+        	int j=i;
+        	int maxHeight=heights[i];
+        	 while(j<heights.length){
+        		 while(j<heights.length && heights[j]>=maxHeight){
+        			 j++;
+        		 }
+        		 maxsize=maxHeight*(j-i)>maxsize?maxHeight*(j-i):maxsize;
+        		 if(j<heights.length){
+        			 maxHeight=heights[j];
+        		 }
+        	 }
+        	 
+        }
+        return maxsize;
+    }
+}
