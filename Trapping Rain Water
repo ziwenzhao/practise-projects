@@ -1,0 +1,38 @@
+public class Solution {
+    public int trap(int[] height) {
+    	int ans=0;
+    	if (height.length<2) return 0;
+    	int []array=new int[height.length];
+    	int max1,max2,max1Idx,max2Idx;
+    	if(height[0]>=height[1]){
+    		max1=height[0];
+    		max1Idx=0;
+    		max2=height[1];
+    		max2Idx=1;
+    	}else{
+    		max1=height[1];
+    		max1Idx=1;
+    		max2=height[0];
+    		max2Idx=0;
+    	}
+    	for(int i=2;i<height.length;i++){
+    		if(max1<height[i]){
+    			max2=max1;
+    			max2Idx=max1Idx;
+    			max1Idx=i;
+    			max1=height[i];
+    		}else if(max2<height[i]){
+    			max2=height[i];
+    			max2Idx=i;
+    		}
+    	}
+    	int left=Math.min(max1Idx, max2Idx);
+    	int right=Math.max(max1Idx, max2Idx);
+    	for(int i=left+1;i<=right-1;i++){
+    		ans+=max2-height[i];
+    	}
+    	ans+=trap(Arrays.copyOfRange(height, 0, left+1));
+    	ans+=trap(Arrays.copyOfRange(height, right, height.length));
+        return ans;
+    }
+}
