@@ -1,0 +1,48 @@
+public class Solution {
+    public int totalNQueens(int n) {
+        
+    	List<List<String>> list=new ArrayList<>();
+    	List<String> tempList=new ArrayList<>();
+    	List<Integer> column=new ArrayList<>();
+    	backtrack(n,tempList,column,list);
+        return list.size();
+    }
+    
+    private void backtrack(int n, List<String> tempList, List<Integer> column, List<List<String>> list) {
+		// TODO Auto-generated method stub
+		if(tempList.size()==n) list.add(new ArrayList<>(tempList));
+		else{
+			int k=0;
+			for(;k<n;k++){
+				boolean conflict=false;
+				for(int c=0;c<column.size();c++){
+					if(column.get(c)==k || column.size()-c==Math.abs(column.get(c)-k)){
+						conflict=true;
+						break;
+					}
+				}
+				if(column.size()!=0 && conflict){
+					continue;
+				}else{
+					column.add(k);
+					StringBuilder s=new StringBuilder();
+					for(int j=0;j<n;j++){
+						if(j==k){
+							s.append('Q');
+						}else{
+							s.append('.');
+						}
+					}
+					tempList.add(s.toString());
+					backtrack(n, tempList, column, list);
+					tempList.remove(tempList.size()-1);
+					column.remove(column.size()-1);
+				}
+				
+			}
+			
+			
+			
+		}
+	}
+}
