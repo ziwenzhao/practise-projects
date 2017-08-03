@@ -1,0 +1,23 @@
+public class Solution {
+    public int search(int[] nums, int target) {
+        if (nums.length==0) return -1;
+        if(target<nums[0]){
+            int i=nums.length-1;
+            for(;i>=1;i--){
+                if (nums[i]==target){
+                    return i;
+                }
+            }
+            if (i==0) return -1;
+        }else if(target>nums[0]){
+            int i=1;
+            for(;i<nums.length;i++){
+                if(nums[i]==target){
+                    return i;
+                }
+            }
+            if (i==nums.length) return -1;
+        }else return 0;
+        return -1;
+    }
+}
