@@ -1,0 +1,20 @@
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+        
+        ArrayList<String> res=new ArrayList<String>();
+        res.add("");
+        for(int i=1;i<=2*n;i++){
+            while(res.get(0).length()<i){
+                String t=res.remove(0);
+                int left=0,right=0;
+                for(char c:t.toCharArray()){
+                    if(c=='(') left++;
+                    if(c==')') right++;
+                }
+                if(left<n) res.add(t+'(');
+                if(right<left) res.add(t+')');
+            }
+        }
+        return res;
+    }
+}
