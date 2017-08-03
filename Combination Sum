@@ -1,0 +1,26 @@
+public class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    	ArrayList<List<Integer>> ans=new ArrayList<List<Integer>>();
+    	Arrays.sort(candidates);
+        for(int i=0;i<candidates.length;i++){
+        	
+        	if(target==candidates[i]) {
+        		ArrayList<Integer> s=new ArrayList<>();
+            	s.add(candidates[i]);
+            	ans.add(s);
+            	break;
+        	} else if(target<candidates[i]){
+        		return ans;
+        	}
+        	int [] newcandidates=Arrays.copyOfRange(candidates, i,candidates.length);
+        	
+        	List<List<Integer>> list=combinationSum(newcandidates, target-candidates[i]);
+        	for(int j=0;j<list.size();j++){
+        		list.get(j).add(candidates[i]);
+        		
+        	}
+        	ans.addAll(list);
+        }
+        return ans;
+    }
+}
