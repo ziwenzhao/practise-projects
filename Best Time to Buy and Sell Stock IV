@@ -1,0 +1,25 @@
+public class Solution {
+    public int maxProfit(int k, int[] prices) {
+    	if(prices.length<2){
+    		return 0;
+    	}
+        return helper(k,0,0,prices);
+    }
+    int helper(int k,int i, int profit,int []prices){
+    	int max=profit;
+    	if(k==0 || i==prices.length){
+    		return profit;
+    	}
+    	for(int j=i;j<prices.length-1;j++){
+    		for(int m=j+1;m<prices.length;m++){
+    			if(prices[m]>prices[j]){
+    				int temp=helper(k-1, m+1, profit+prices[m]-prices[j], prices);
+    				if(max<temp){
+    					max=temp;
+    				}
+    			}
+    		}
+    	}
+    	return max;
+    }
+}
