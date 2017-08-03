@@ -1,0 +1,37 @@
+public class Solution {
+    public int divide(int dividend, int divisor) {
+        if(divisor==0){
+        	return Integer.MAX_VALUE;
+        }
+        if(dividend==Integer.MIN_VALUE && divisor==-1){
+        	return Integer.MAX_VALUE;
+        }
+        int n,m,sign,res=0;
+        int i=1;
+        n=(dividend>=0)?dividend:-dividend;
+        m=(divisor>=0)?divisor:-divisor;
+        sign=((dividend>=0 && divisor>0) || (dividend<0 && divisor<0))?1:-1;
+        int p=m;
+        while(n>=p){
+        	i=i<<1;
+            p=p<<1;
+        }
+        i=i>>1;
+        res+=i;
+        p=p>>1;
+        n=n-p;
+        p=p>>1;
+        i=i>>1;
+        while(n>=m){
+        	if(n>=p){
+        		res+=i;
+        		n-=p;
+        	}
+        	p=p>>1;
+    		i=i>>1;
+        }
+            
+        return (sign==1)?res:-res;
+        
+    }
+}
