@@ -1,0 +1,23 @@
+public class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+    	if(head==null || head.next==null){
+    		return head;
+    	}
+    	List<ListNode> list=new ArrayList<>();
+    	ListNode p=head;
+    	while(p!=null){
+    		list.add(p);
+    		p=p.next;
+    	}
+    	k=k%list.size();
+        for(int i=1;i<=k;i++){
+        	ListNode last=list.get(list.size()-1);
+        	last.next=list.get(0);
+        	ListNode lastSecond=list.get(list.size()-2);
+        	lastSecond.next=null;
+        	list.remove(list.size()-1);
+        	list.add(0, last);
+        }
+        return list.get(0);
+    }
+}
