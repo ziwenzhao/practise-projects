@@ -1,0 +1,30 @@
+public class Solution {
+    public ListNode partition(ListNode head, int x) {
+    	ListNode dummy =new ListNode(0);
+    	dummy.next=head;
+        ListNode p=head;
+        ListNode pre=new ListNode(0);
+        ListNode last=dummy;
+        boolean found=false;
+        while(p!=null){
+        	if(p.val<x && found){
+        		last.next=p.next;
+        		p.next=pre.next;
+        		pre.next=p;
+        		pre=p;
+        		p=last.next;
+        	}else if(p.val<x && !found){
+        		last=p;
+        		p=p.next;
+        	}else if(p.val>=x){
+        		if(!found){
+        			found=true;
+        			pre=last;
+        		}
+        		last=p;
+    			p=p.next;
+        	}
+        }
+        return dummy.next;
+    }
+}
