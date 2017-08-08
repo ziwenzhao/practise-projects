@@ -1,0 +1,32 @@
+public class Solution {
+    public boolean isValidBST(TreeNode root) {
+    	if(root==null) return true;
+    	if(maxTree(root.left)<root.val && minTree(root.right)>root.val && isValidBST(root.left) && isValidBST(root.right)){
+    		return true;
+    	}
+    	return false;
+    }
+    private int minTree(TreeNode t) {
+		// TODO Auto-generated method stub
+    	if(t==null) return Integer.MAX_VALUE;
+    	int min=t.val;
+    	if(minTree(t.left)<min){
+    		min=minTree(t.left);
+    	}
+    	if(minTree(t.right)<min){
+    		min=minTree(t.right);
+    	}
+    	return min;
+	}
+	private int maxTree(TreeNode t){
+    	if(t==null) return Integer.MIN_VALUE;
+    	int max=t.val;
+    	if(maxTree(t.left)>max){
+    		max=maxTree(t.left);
+    	}
+    	if(maxTree(t.right)>max){
+    		max=maxTree(t.right);
+    	}
+    	return max;
+    }
+}
