@@ -1,0 +1,30 @@
+public class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> list=new ArrayList<>();
+        backtrack(s,new String(),0,0,list);
+        return list;
+    }
+
+	private void backtrack(String s, String curr,int i,int num, List<String> list) {
+		// TODO Auto-generated method stub
+		if(i>=s.length()) {
+			if(num==4){
+				
+				list.add(curr.substring(0,curr.length()-1));
+			}
+		}
+		else{
+			if(num==4) return;
+			else{
+				backtrack(s, curr+s.charAt(i)+'.', i+1, num+1, list);
+				if(i<=s.length()-2 && s.charAt(i)!='0'){
+					backtrack(s, curr+s.substring(i, i+2)+'.', i+2, num+1, list);
+				}
+				if(i<=s.length()-3 && s.charAt(i)!='0' && Integer.parseInt(s.substring(i,i+3))<=255){
+					backtrack(s, curr+s.substring(i,i+3)+'.', i+3, num+1, list);
+				}
+			}
+		}
+		
+	}
+}
