@@ -1,0 +1,38 @@
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+    	ListNode p=head;
+    	if(head==null) return null;
+    	ArrayList<ListNode> list=new ArrayList<>();
+    	if(head!=null && head.next==null){
+    		return head;
+    	}
+    	int lastVal=0;
+    	while (p!=null) {
+    		if(p==head){
+    			if(p.val!=p.next.val){
+    				list.add(p);
+    			}
+    		}else if(p.next==null){
+    			if(p.val!=lastVal){
+    				if(list.size()!=0){ListNode last=list.get(list.size()-1);last.next=p;}
+    				list.add(p);
+    			}
+    		}
+    			else{
+    			if(p.val!=p.next.val && p.val!=lastVal){
+    				
+    			if(list.size()!=0){ListNode last=list.get(list.size()-1);
+    			last.next=p;}
+    			list.add(p);
+    			}
+    		}
+    		lastVal=p.val;
+    		p=p.next;
+		}
+    	if(!list.isEmpty()){
+    		ListNode listNode=list.get(list.size()-1);
+    		listNode.next=null;
+    	}
+    	return list.isEmpty()?null:list.get(0);
+    }
+}
