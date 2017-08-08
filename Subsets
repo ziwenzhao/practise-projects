@@ -2,35 +2,17 @@ public class Solution {
     public List<List<Integer>> subsets(int[] nums) {
     	List<List<Integer>> list=new ArrayList<>();
     	list.add(new ArrayList<>());
-    	for(int i=1;i<=nums.length;i++){
-    		list.addAll(combine(nums, i));
+    	for(int i=0;i<nums.length;i++){
+    		int listSize=list.size();
+    		for(int j=1;j<=listSize;j++){
+    			List<Integer> first=list.remove(0);
+    			List<Integer> temp1=new ArrayList<>(first);
+    			List<Integer> temp2=new ArrayList<>(first);
+    			temp2.add(nums[i]);
+    			list.add(temp1);
+    			list.add(temp2);
+    		}
     	}
     	return list;
     }
-    
-    public List<List<Integer>> combine(int[] nums, int k) {
-    	List<List<Integer>> listCombine=new ArrayList<>();
-    	List<Integer> numsList=new ArrayList<>();
-    	for(int i:nums){
-    		numsList.add(i);
-    	}
-    	backtrack(numsList,k,new ArrayList<Integer>(),listCombine);
-    	return listCombine;
-    }
-
-	private void backtrack(List<Integer> numsList, int k, ArrayList<Integer> arrayList, List<List<Integer>> list) {
-		// TODO Auto-generated method stub
-		if(arrayList.size()==k){
-			list.add(arrayList);
-			return;
-		}
-		int max;
-		if(arrayList.size()==0) max=-1;
-		else max=numsList.indexOf(arrayList.get(arrayList.size()-1));
-		for(int i=max+1;i<numsList.size();i++){
-			ArrayList<Integer> temp=new ArrayList<>(arrayList);
-			temp.add(numsList.get(i));
-			backtrack(numsList, k, temp, list);
-		}
-	}
 }
