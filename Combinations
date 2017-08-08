@@ -1,0 +1,25 @@
+public class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+    	List<List<Integer>> list=new ArrayList<>();
+    	backtrack(n,k,new ArrayList<Integer>(),list);
+    	return list;
+    }
+
+	private void backtrack(int n, int k, ArrayList<Integer> arrayList, List<List<Integer>> list) {
+		// TODO Auto-generated method stub
+		if(arrayList.size()==k){
+			list.add(arrayList);
+			return;
+		}
+		int max;
+		if(arrayList.size()==0) max=0;
+		else max=arrayList.get(arrayList.size()-1);
+		for(int i=max+1;i<=n;i++){
+			if(!arrayList.contains(i)){
+				ArrayList<Integer> temp=new ArrayList<>(arrayList);
+				temp.add(i);
+				backtrack(n, k, temp, list);
+			}
+		}
+	}
+}
