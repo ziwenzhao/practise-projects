@@ -1,0 +1,96 @@
+public class Solution {
+    public void solve(char[][] board) {
+        if(board.length==0){
+    		return;
+    	}
+    	List<List<Integer>> checkList=new ArrayList<>();
+        for(int i=0;i<board.length;i++){
+        	for(int j=0;j<board[0].length;j++){
+        		List<Integer> temp=new ArrayList<>();
+        		temp.add(i);
+        		temp.add(j);
+        		if(checkList.contains(temp)){
+        			continue;
+        		}
+        		checkList.add(new ArrayList<>(temp));
+        		if(Character.toLowerCase(board[i][j])=='o'){
+        			List<List<Integer>> region=new ArrayList<>();
+        			region.add(temp);
+        			boolean capture=true;
+        			List<List<Integer>> curr=new ArrayList<>();
+        			curr.add(temp);
+        			while(!curr.isEmpty()){
+        				List<List<Integer>> next=new ArrayList<>();
+        				for(List<Integer> point:curr){
+        					if(point.get(0)==0 || point.get(0)==board.length-1 || point.get(1)==0 || point.get(1)==board[0].length-1){
+        						capture=false;
+        					}
+        					
+        					if(point.get(0)!=0){
+        						List<Integer> newPoint=new ArrayList<>();
+        						newPoint.add(point.get(0)-1);
+    							newPoint.add(point.get(1));
+        						if(!checkList.contains(newPoint)){
+        							checkList.add(newPoint);
+        							if( Character.toLowerCase(board[point.get(0)-1][point.get(1)])=='o'){
+        								next.add(newPoint);
+            							region.add(newPoint);
+        						}
+        							
+        						}
+        					}
+        					if(point.get(0)!=board.length-1){
+        						List<Integer> newPoint=new ArrayList<>();
+        						newPoint.add(point.get(0)+1);
+        						newPoint.add(point.get(1));
+        						if(!checkList.contains(newPoint)){
+        							checkList.add(newPoint);
+        							if(Character.toLowerCase(board[point.get(0)+1][point.get(1)])=='o'){
+        								next.add(newPoint);
+                						region.add(newPoint);
+        						}
+        					}
+        						
+        						
+        					}
+        					if(point.get(1)!=0){
+        						List<Integer> newPoint=new ArrayList<>();
+        						newPoint.add(point.get(0));
+        						newPoint.add(point.get(1)-1);
+        						if(!checkList.contains(newPoint)){
+        							checkList.add(newPoint);
+        							if(Character.toLowerCase(board[point.get(0)][point.get(1)-1])=='o'){
+        								next.add(newPoint);
+                						region.add(newPoint);
+        						}
+        					}
+        					}
+        					if(point.get(1)!=board[0].length-1){
+        						List<Integer> newPoint=new ArrayList<>();
+        						newPoint.add(point.get(0));
+        						newPoint.add(point.get(1)+1);
+        						if(!checkList.contains(newPoint)){
+        							checkList.add(newPoint);
+        							if(Character.toLowerCase(board[point.get(0)][point.get(1)+1])=='o'){
+        								next.add(newPoint);
+                						region.add(newPoint);
+                					}
+        						}
+        						
+        						
+        						
+        					}
+        					curr=next;
+        				}
+        				
+        			}
+        			if(capture==true){
+        				for(List<Integer> point:region){
+        					board[point.get(0)][point.get(1)]='X';
+        				}
+        			}
+        		}
+        	}
+        }
+    }
+}
