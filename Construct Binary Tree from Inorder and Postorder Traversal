@@ -1,0 +1,33 @@
+public class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        if(inorder.length==0){
+        	return null;
+        }
+        int rootIdx=0;
+        for(int i=0;i<inorder.length;i++){
+        	if(inorder[i]==postorder[postorder.length-1]){
+        		rootIdx=i;
+        	}
+        }
+        TreeNode root=new TreeNode(postorder[postorder.length-1]);
+        int []leftIn=new int[rootIdx];
+        for(int i=0;i<rootIdx;i++){
+        	leftIn[i]=inorder[i];
+        }
+        int []leftPost=new int[rootIdx];
+        for(int i=0;i<leftPost.length;i++){
+        	leftPost[i]=postorder[i];
+        }
+        root.left=buildTree(leftIn, leftPost);
+        int[] rightIn=new int[inorder.length-rootIdx-1];
+        for(int i=0;i<rightIn.length;i++){
+        	rightIn[i]=inorder[i+rootIdx+1];
+        }
+        int []rightPost=new int[inorder.length-rootIdx-1];
+        for(int i=0;i<rightPost.length;i++){
+        	rightPost[i]=postorder[rootIdx+i];
+        }
+        root.right=buildTree(rightIn, rightPost);
+        return root;
+    }
+}
