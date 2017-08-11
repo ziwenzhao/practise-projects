@@ -1,0 +1,28 @@
+public class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        if(triangle.isEmpty()){
+        	return 0;
+        }
+        List<Integer> curr=new ArrayList<>();
+        curr.add(triangle.get(0).get(0));
+        return getMin(curr,0,0,triangle);
+    }
+
+	private int getMin(List<Integer> curr, int level, int index, List<List<Integer>> triangle) {
+		// TODO Auto-generated method stub
+		if(level==triangle.size()-1){
+			int sum=0;
+			for(Integer i:curr){
+				sum+=i;
+			}
+			return sum;
+		}
+		curr.add(triangle.get(level+1).get(index));
+		int left=getMin(curr, level+1, index, triangle);
+		curr.remove(curr.size()-1);
+		curr.add(triangle.get(level+1).get(index+1));
+		int right=getMin(curr, level+1, index+1, triangle);
+		curr.remove(curr.size()-1);
+		return Math.min(left, right);
+	}
+}
