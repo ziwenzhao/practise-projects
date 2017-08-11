@@ -1,0 +1,35 @@
+public class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+    	int length=1;
+    	List<String> curr=new ArrayList<>();
+    	curr.add(beginWord);
+    	while(!curr.isEmpty() && !wordList.isEmpty()){
+    		List<String> next=new ArrayList<>();
+    		for(String s:curr){
+    			int j=0;
+    			while(j<wordList.size()){
+    				String w=wordList.get(j);
+    				int diff=0;
+    				for(int i=0;i<s.length();i++){
+    					if(s.charAt(i)!=w.charAt(i)){
+    						diff++;
+    					}
+    				}
+    				if(diff==1){
+    					if(w.equals(endWord)){
+    						return length+1;
+    					}
+    					next.add(w);
+    					wordList.remove(w);
+    				}
+    				else{
+    					j++;
+    				}
+    			}
+    		}
+    		curr=next;
+    		length++;
+    	}
+    	return 0;
+    }
+}
