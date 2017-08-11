@@ -1,0 +1,45 @@
+public class Solution {
+    public void flatten(TreeNode root) {
+         if(root==null){
+        	 return;
+         }
+         helper(root);
+         
+//         ListNode p=new ListNode(root.val);
+//         if(root.left!=null){
+//        	 ListNode pLeft=new ListNode(root.left.val);
+//        	 p.next=pLeft;
+//        	 flatten(root);
+//         }
+    }
+
+	private TreeNode helper(TreeNode root) {
+		// TODO Auto-generated method stub
+		if(root==null){
+			return null;
+		}
+		if(root.left==null && root.right==null){
+			return root;
+		}
+		TreeNode tempRight=root.right;
+		TreeNode tempLeft=root.left;
+		if(root.left!=null){
+			root.right=root.left;
+			root.left=null;
+			if(tempRight==null){
+				return helper(tempLeft);
+			}else{
+				helper(tempLeft).right=tempRight;
+				return helper(tempRight);
+			}
+			
+		}else{
+			if(tempRight==null){
+				return root;
+			}else{
+				return helper(tempRight);
+			}
+		}
+		
+	}
+}
