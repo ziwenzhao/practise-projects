@@ -1,0 +1,29 @@
+public class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> list=new ArrayList<>();
+        backTrack(s,new ArrayList<>(),-1,list);
+        return list;
+    }
+
+	private void backTrack(String s, ArrayList arrayList, int i, List<List<String>> list) {
+		// TODO Auto-generated method stub
+		if(i==s.length()-1){
+			list.add(new ArrayList<>(arrayList));
+		}
+		for(int j=i+1;j<s.length();j++){
+			if(isPalindrome(s.substring(i+1, j+1))){
+				arrayList.add(s.substring(i+1,j+1));
+				backTrack(s, arrayList, j, list);
+				arrayList.remove(arrayList.size()-1);
+			}
+		}
+	}
+
+	private boolean isPalindrome(String s) {
+		// TODO Auto-generated method stub
+		if(new StringBuilder(s).reverse().toString().equals(s)){
+			return true;
+		}
+		return false;
+	}
+}
