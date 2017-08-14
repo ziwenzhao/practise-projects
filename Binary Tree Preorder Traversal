@@ -9,11 +9,33 @@
  */
 public class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-    	if(root==null) return new ArrayList<>();
-        List<Integer> list=new ArrayList<>();
-        list.add(root.val);
-        list.addAll(preorderTraversal(root.left));
-        list.addAll(preorderTraversal(root.right));
-        return list;
+    	List<Integer> list=new ArrayList<>();
+    	if(root==null){
+    		return list;
+    	}
+    	Stack<TreeNode> stack=new Stack<>();
+    	stack.add(root);
+    	TreeNode p=root;
+    	while(!stack.isEmpty()){
+    		list.add(p.val);
+    		if(p.left!=null){
+    			p=p.left;
+    			stack.push(p);
+    		}else if(p.right!=null){
+    			p=stack.pop().right;
+    			stack.push(p);
+    		}else{
+    			stack.pop();
+    			while(!stack.isEmpty()){
+    				TreeNode t=stack.pop().right;
+    				if(t!=null){
+    					p=t;
+    					stack.push(t);
+                        break;
+    				}
+    			}
+    		}
+    	}
+    	return list;
     }
 }
