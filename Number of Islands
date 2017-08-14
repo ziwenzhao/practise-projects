@@ -1,0 +1,74 @@
+public class Solution {
+    public int numIslands(char[][] grid) {
+    	int count=0;
+    	List<List<Integer>> checkList=new ArrayList<>();
+        for(int i=0;i<grid.length;i++){
+        	for(int j=0;j<grid[0].length;j++){
+        		List<Integer> point=new ArrayList<>();
+        		point.add(i);
+        		point.add(j);
+        		if(!checkList.contains(point) && grid[i][j]=='1'){
+        			findIsland(point,checkList,grid);
+        			count++;
+//        			List<ArrayList<Integer>> curr=new ArrayList<>();
+//        			curr.add(point);
+//        			while(curr.isEmpty()){
+//        				int currSize=curr.size();
+//        				for(int k=0;k<currSize;k++){
+//        					List<Integer> pointK=curr.remove(0);
+//        					int row=pointK.get(0);
+//        					int col=pointK.get(1);
+//        					if(row+1)
+//        				}
+//        			}
+        		}
+        	}
+        }
+        return count;
+    }
+
+	private void findIsland(List<Integer> point, List<List<Integer>> checkList, char[][] grid) {
+		// TODO Auto-generated method stub
+		int row=point.get(0);
+		int col=point.get(1);
+		if(col!=0){
+			List<Integer> left=new ArrayList<>();
+			left.add(row);
+			left.add(col-1);
+			if(!checkList.contains(left)){
+				if(grid[row][col-1]=='1'){
+					checkList.add(left);
+					findIsland(left, checkList, grid);
+				}
+			}
+		}
+		if(row!=0){
+			List<Integer> up=new ArrayList<>();
+			up.add(row-1);
+			up.add(col);
+			if(!checkList.contains(up) && grid[row-1][col]=='1'){
+				checkList.add(up);
+				findIsland(up, checkList, grid);
+			}
+		}
+		if(col!=grid[0].length-1){
+			List<Integer> right=new ArrayList<>();
+			right.add(row);
+			right.add(col+1);
+			if(!checkList.contains(right) && grid[row][col+1]=='1'){
+				checkList.add(right);
+				findIsland(right, checkList, grid);
+			}
+		}
+		if(row!=grid.length-1){
+			List<Integer> down=new ArrayList<>();
+			down.add(row+1);
+			down.add(col);
+			if(!checkList.contains(down) && grid[row+1][col]=='1'){
+				checkList.add(down);
+				findIsland(down, checkList, grid);
+			}
+		}
+		
+	}
+}
